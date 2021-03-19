@@ -15,16 +15,3 @@ $ rustup update
 $ rustc main.rs
 $ ./main
 Hello, world!
-
-# Cargo
-
-Cargo is a Rust build system and package manager.
-
-## Create, build, run
-
-$ cargo new hello_cargo
-$ cd hello_cargo
-$ cargo check
-$ cargo build
-$ ./target/debug/hello_cargo
-$ cargo run
