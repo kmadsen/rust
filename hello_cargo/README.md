@@ -16,3 +16,9 @@ $ cargo build
 
 $ ./target/debug/hello_cargo
 $ cargo run
+
+## Integration tests
+
+This integrates with the hello_crate library.
+
+$ cargo test

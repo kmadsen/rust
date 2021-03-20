@@ -10,8 +10,8 @@
 
 #[derive(Debug)]
 pub struct Rectangle {
-    width: u32,
-    height: u32,
+    pub width: u32,
+    pub height: u32,
 }
 
 impl Rectangle {
