@@ -22,3 +22,9 @@ $ cargo run
 This integrates with the hello_crate library.
 
 $ cargo test
+
+## Useful tools
+
+$ cargo fmt
+$ cargo fix
+$ cargo clippy

@@ -25,7 +25,7 @@ pub fn add_two(a: i32) -> i32 {
 }
 
 fn internal_adder(a: i32, b: i32) -> i32 {
-    a+b
+    a + b
 }
 
 pub fn divide(top: i32, bottom: i32) -> f64 {
@@ -45,11 +45,11 @@ mod tests {
     fn larger_can_hold_smaller() {
         let larger = Rectangle {
             width: 8,
-            height: 7
+            height: 7,
         };
         let smaller = Rectangle {
             width: 5,
-            height: 1
+            height: 1,
         };
         assert!(larger.can_hold(&smaller));
     }
@@ -57,7 +57,7 @@ mod tests {
     #[test]
     fn test_private_functions() {
         let result = internal_adder(2, 2);
-        
+
         assert_eq!(4, result);
     }
 

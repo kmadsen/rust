@@ -14,6 +14,6 @@ fn main() {
 fn create_rectangle(width: u32, height: u32) -> Rectangle {
     return Rectangle {
         width: width,
-        height: height
-    }
+        height: height,
+    };
 }
