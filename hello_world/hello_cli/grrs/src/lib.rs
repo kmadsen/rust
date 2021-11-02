@@ -3,6 +3,7 @@ use std::path::PathBuf;
 use std::io::Write;
 use std::fs::File;
 use std::io::prelude::*;
+use anyhow::{Context, Result};
 
 pub fn find_matches(
     path_buf: &PathBuf,
@@ -10,6 +11,25 @@ pub fn find_matches(
     mut writer: impl Write
 ) -> std::result::Result<(), std::io::Error> {
     let content = File::open(&path_buf)?;
+    let reader = BufReader::new(content);
+    let read_line_iter = reader.lines()
+        .filter_map(|result| result.ok());
+      
+    for line in read_line_iter {
+        if line.contains(pattern) {
+            writeln!(writer, "{}", line).unwrap();
+        }
+    }
+    Ok(())
+}
+
+pub fn find_matches_anyhow(
+    path_buf: &PathBuf,
+    pattern: &str,
+    mut writer: impl Write
+) -> Result<()> {
+    let content = File::open(&path_buf)
+        .with_context(|| format!("could not read file {}", path_buf.display()))?;
     let reader = BufReader::new(content);
     let read_line_iter = reader.lines()
         .filter_map(|result| result.ok());
@@ -43,7 +63,16 @@ mod tests {
       let path_buf = PathBuf::from("unknown/file.txt");
       let mut result = Vec::new();
       
-      let result = find_matches(&path_buf, "multiply", &mut result);
-      assert_eq!(&true, &result.is_err(), "Error expected");
+      let result_err = find_matches(&path_buf, "multiply", &mut result);
+      assert_eq!(&true, &result_err.is_err(), "Error expected");
+  }
+
+  #[test]
+  #[should_panic(expected = "could not read file unknown/file.txt")]
+  fn handle_errors_with_anyhow() {
+      let path_buf = PathBuf::from("unknown/file.txt");
+      let mut result = Vec::new();
+      
+      find_matches_anyhow(&path_buf, "multiply", &mut result).unwrap();
   }
 }
