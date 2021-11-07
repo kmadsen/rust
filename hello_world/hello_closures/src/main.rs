@@ -10,8 +10,10 @@ fn different_closures() {
 }
 
 mod example_13_1;
+mod example_13_2;
 
 fn main() {
     different_closures();
+    example_13_2::different_iterators();
     example_13_1::generate_workout(20, 3);
 }
