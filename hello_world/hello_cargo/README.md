@@ -52,3 +52,10 @@ error: no such subcommand: `add`
 $ cargo install cargo-edit
 $ cargo add plotters
 ```
+
+## Documentation
+
+```
+$ cargo doc
+$ cargo doc --open
+```

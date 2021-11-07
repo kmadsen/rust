@@ -1,16 +1,30 @@
 use hello_crate::Rectangle;
 
 fn main() {
-    let smaller = create_rectangle(10, 20);
-    let larger = create_rectangle(11, 21);
+ let tv_cga_screen = create_rectangle(320, 200);
+ let tv_sif_screen = create_rectangle(384, 288);
 
-    if smaller.can_hold(&larger) {
-        println!("{:?} can hold {:?}", smaller, larger);
-    } else {
-        println!("{:?} cannot hold {:?}", smaller, larger);
-    }
+ if tv_sif_screen.can_hold(&tv_cga_screen) {
+   println!("qvga can hold sif");
+ } else {
+   println!("qvga cannot hold sif")
+ }
 }
 
+/// A rectangle is like a TV.
+///
+/// # Examples
+///
+/// ```
+/// let tv_cga_screen = create_rectangle(320, 200);
+/// let tv_sif_screen = create_rectangle(384, 288);
+///
+/// if tv_sif_screen.can_hold(&tv_cga_screen) {
+///   println!("qvga can hold sif");
+/// } else {
+///   println!("qvga cannot hold sif")
+/// }
+/// ```
 fn create_rectangle(width: u32, height: u32) -> Rectangle {
     return Rectangle {
         width: width,
