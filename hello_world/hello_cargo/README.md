@@ -35,6 +35,14 @@ $ cargo fix
 $ cargo clippy
 ```
 
+More on cargo fmt.
+https://rust-lang.github.io/rustfmt/
+https://marketplace.visualstudio.com/items?itemName=statiolake.vscode-rustfmt
+
+There is a good integration tool with vscode and rustfmt. In your cargo package
+you can specify a rustfmt.toml|.rustfmt.toml file. vscode reads it and applies
+the formatting rules to your editor. Very simple!
+
 ## Adding dependencies
 
 Cargo does not have an add command. But if you have cargo-edit there is.
