@@ -1,8 +1,7 @@
 
 # Details
 
-Pattern Matching is nothing new in the book https://doc.rust-lang.org/book/ch18-00-patterns.html
-But this chapter goes through some more exammples and this cargo package is to sandbox those examples.
+Testing the Advanced Features section https://doc.rust-lang.org/book/ch19-00-advanced-features.html
 
 # Usage
 
@@ -14,3 +13,5 @@ $ cargo run
 
 ## Notes
 
+The Rust Reference https://doc.rust-lang.org/reference/introduction.html
+The Unstable Book https://doc.rust-lang.org/nightly/unstable-book/
