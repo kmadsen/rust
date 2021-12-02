@@ -5,6 +5,7 @@ pub fn run() {
   creating_safe_over_unsafe();
   run_external_code();
   mutable_global_static_variable();
+  unsafe_traits();
 }
 
 #[allow(dead_code)]
@@ -61,10 +62,10 @@ fn creating_safe_over_unsafe() {
 
   let mut v = vec![1, 2, 3, 4, 5, 6];
   let r = &mut v[..];
-  // Existing rust version 
+  // Existing rust version
   // let (a, b) = r.split_at_mut(3);
 
-  // Testing the above solution. The mut vec r is safe because the 
+  // Testing the above solution. The mut vec r is safe because the
   // borrow checker helps ensure a single vec is mutable.
   let (a, b) = split_at_mut(r, 3);
 
@@ -100,14 +101,42 @@ fn add_to_count(inc: u32) {
   unsafe {
     let old_value = GLOBAL_STATIC_COUNTER;
     GLOBAL_STATIC_COUNTER += inc;
-    println!("add_to_count {} is now {}", old_value, GLOBAL_STATIC_COUNTER);
+    println!(
+      "add_to_count {} is now {}",
+      old_value, GLOBAL_STATIC_COUNTER
+    );
   }
 }
 
-unsafe trait Foo {
-  // methods go here
+/**
+ * Example of a generic Slicer for a container.
+ */
+unsafe trait Slicer {
+  type Item;
+  unsafe fn split_at_mut(&mut self, mid: usize) -> (&mut [Self::Item], &mut [Self::Item]);
 }
 
-unsafe impl Foo for i32 {
-  // method implementations go here
+struct Container<T>(Vec<T>);
+
+unsafe impl<T> Slicer for Container<T> {
+  type Item = T;
+  unsafe fn split_at_mut(&mut self, mid: usize) -> (&mut [T], &mut [T]) {
+    let len = self.0.len();
+    let ptr = self.0.as_mut_ptr();
+    (
+      std::slice::from_raw_parts_mut(ptr, mid),
+      std::slice::from_raw_parts_mut(ptr.add(mid), len - mid),
+    )
+  }
+}
+
+#[allow(dead_code)]
+fn unsafe_traits() {
+  let mut container = Container(vec![1, 2, 3, 4, 5]);
+  unsafe {
+    let (a, b) = container.split_at_mut(3);
+    assert_eq!(a, &mut [1, 2, 3]);
+    assert_eq!(b, &mut [4, 5]);
+    println!("Used an unsafe trait {:?} {:?}", a, b)
+  }
 }
