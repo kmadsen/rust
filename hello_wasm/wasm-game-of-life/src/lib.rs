@@ -28,6 +28,15 @@ pub struct Universe {
 
 // Private methods that are not exported.
 
+impl Cell {
+  fn toggle(&mut self) {
+    *self = match *self {
+      Cell::Dead => Cell::Alive,
+      Cell::Alive => Cell::Dead
+    };
+  }
+}
+
 impl Universe {
   fn get_index(&self, pos: Position) -> usize {
     assert!(pos.0 < self.height);
@@ -110,6 +119,11 @@ impl Universe {
   pub fn set_height(&mut self, height: u32) {
     self.height = height;
     self.cells = (0..self.width * height).map(|_i| Cell::Dead).collect();
+  }
+
+  pub fn toggle_cell(&mut self, row: u32, column: u32) {
+    let idx = self.get_index((row, column));
+    self.cells[idx].toggle();
   }
 
   pub fn new() -> Universe {
