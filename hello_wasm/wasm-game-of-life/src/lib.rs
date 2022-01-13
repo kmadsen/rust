@@ -1,4 +1,7 @@
 mod util;
+mod timer;
+
+use timer::Timer;
 
 use wasm_bindgen::prelude::*;
 
@@ -128,8 +131,8 @@ impl Universe {
 
   pub fn new() -> Universe {
     util::set_panic_hook();
-    let width = 64;
-    let height = 64;
+    let width = 128;
+    let height = 128;
 
     kyle_log!(
       "New universe[{}, {}]",
@@ -159,31 +162,37 @@ impl Universe {
   }
 
   pub fn tick(&mut self) {
+    let _timer = Timer::new("Universe::tick");
+
     let mut next = self.cells.clone();
 
-    for row in 0..self.height {
-      for col in 0..self.width {
-        let idx = self.get_index((row, col));
-        let cell = self.cells[idx];
-        let live_neighbors = self.live_neighbor_count((row, col));
+    {
+      let _timer = Timer::new("new generation");
+      for row in 0..self.height {
+        for col in 0..self.width {
+          let idx = self.get_index((row, col));
+          let cell = self.cells[idx];
+          let live_neighbors = self.live_neighbor_count((row, col));
 
-        next[idx] = match (cell, live_neighbors) {
-          // Rule 1. Any live cell with fewer than two live
-          // neighbours dies, as if by underpopulation.
-          (Cell::Alive, x) if x < 2 => Cell::Dead,
-          // Rule 2. Any live cell with two or three live
-          // neighbours lives on to the next generation.
-          (Cell::Alive, 2) | (Cell::Alive, 3) => Cell::Alive,
-          // Rule 3. Any live cell with more than three live
-          // neighbours dies, as if by overpopulation.
-          (Cell::Alive, x) if x > 3 => Cell::Dead,
-          // Rule 4. Any dead cell with exactly three live
-          // neighbours becomes a live cell, as if by reproduction.
-          (Cell::Dead, 3) => Cell::Alive,
-          (otherwise, _) => otherwise,
-        };
+          next[idx] = match (cell, live_neighbors) {
+            // Rule 1. Any live cell with fewer than two live
+            // neighbours dies, as if by underpopulation.
+            (Cell::Alive, x) if x < 2 => Cell::Dead,
+            // Rule 2. Any live cell with two or three live
+            // neighbours lives on to the next generation.
+            (Cell::Alive, 2) | (Cell::Alive, 3) => Cell::Alive,
+            // Rule 3. Any live cell with more than three live
+            // neighbours dies, as if by overpopulation.
+            (Cell::Alive, x) if x > 3 => Cell::Dead,
+            // Rule 4. Any dead cell with exactly three live
+            // neighbours becomes a live cell, as if by reproduction.
+            (Cell::Dead, 3) => Cell::Alive,
+            (otherwise, _) => otherwise,
+          };
+        }
       }
     }
+
     self.cells = next;
   }
 }

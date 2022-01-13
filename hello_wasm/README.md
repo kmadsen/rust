@@ -7,6 +7,9 @@ Further reading for wasm-pack https://rustwasm.github.io/docs/wasm-pack/
 
 Further reading for wasm-bindgen https://rustwasm.github.io/docs/wasm-bindgen/
 
+Check out the bytecodealliance projects. Specificaly wasmtime as it is a standalone
+wasm runtime https://docs.wasmtime.dev/
+
 # Installation
 *This was done 2022-01-07
 

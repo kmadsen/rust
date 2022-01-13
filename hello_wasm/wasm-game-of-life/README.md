@@ -1,22 +1,3 @@
-<div align="center">
-
-  <h1><code>wasm-pack-template</code></h1>
-
-  <strong>A template for kick starting a Rust and WebAssembly project using <a href="https://github.com/rustwasm/wasm-pack">wasm-pack</a>.</strong>
-
-  <p>
-    <a href="https://travis-ci.org/rustwasm/wasm-pack-template"><img src="https://img.shields.io/travis/rustwasm/wasm-pack-template.svg?style=flat-square" alt="Build Status" /></a>
-  </p>
-
-  <h3>
-    <a href="https://rustwasm.github.io/docs/wasm-pack/tutorials/npm-browser-packages/index.html">Tutorial</a>
-    <span> | </span>
-    <a href="https://discordapp.com/channels/442252698964721669/443151097398296587">Chat</a>
-  </h3>
-
-  <sub>Built with 🦀🕸 by <a href="https://rustwasm.github.io/">The Rust and WebAssembly Working Group</a></sub>
-</div>
-
 ## About
 
 [**📚 Read this template tutorial! 📚**][template-docs]
@@ -32,15 +13,6 @@ templates and usages of `wasm-pack`.
 
 ## 🚴 Usage
 
-### 🐑 Use `cargo generate` to Clone this Template
-
-[Learn more about `cargo generate` here.](https://github.com/ashleygwilliams/cargo-generate)
-
-```
-cargo generate --git https://github.com/rustwasm/wasm-pack-template.git --name my-project
-cd my-project
-```
-
 ### 🛠️ Build with `wasm-pack build`
 
 ```
@@ -54,17 +26,6 @@ wasm-pack test --headless --firefox
 ```
 
 Issues: https://rustwasm.github.io/wasm-bindgen/wasm-bindgen-test/browsers.html
-
-### 🔬 Test with npm
-
-```
-npm init wasm-app www
-cd www
-npm install
-npm start
-```
-
-Open browswer http://localhost:8080/
 
 ### 🎁 Publish to NPM with `wasm-pack publish`
 

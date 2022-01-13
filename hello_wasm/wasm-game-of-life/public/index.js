@@ -1,5 +1,6 @@
 import { Universe, Cell } from "wasm-game-of-life";
 import { memory } from "wasm-game-of-life/wasm_game_of_life_bg";
+import Fps from "./fps.js"
 
 const CELL_SIZE = 5; // px
 const GRID_COLOR = "#CCCCCC";
@@ -18,7 +19,11 @@ const ctx = canvas.getContext('2d');
 
 let animationId = null;
 
+const fps = new Fps();
+
 const renderLoop = () => {
+  fps.render();
+
   drawGrid();
   drawCells();
 
@@ -53,12 +58,22 @@ const drawCells = () => {
   const cellsPtr = universe.cells();
   const cells = new Uint8Array(memory.buffer, cellsPtr, width * height);
   ctx.beginPath();
+
+  // Draw dead and alive cells separately because ctx.fillStyle is slow.
+  drawCellState(cells, Cell.Dead);
+  drawCellState(cells, Cell.Alive);
+
+  ctx.stroke();
+};
+
+const drawCellState = (cells, cell) => {
+  ctx.fillStyle = cell === Cell.Dead ? DEAD_COLOR : ALIVE_COLOR;
   for (let row = 0; row < height; row++) {
     for (let col = 0; col < width; col++) {
       const idx = getIndex(row, col);
-      ctx.fillStyle = cells[idx] === Cell.Dead
-        ? DEAD_COLOR
-        : ALIVE_COLOR;
+      if (cells[idx] !== cell) {
+        continue
+      }
       ctx.fillRect(
         col * (CELL_SIZE + 1) + 1,
         row * (CELL_SIZE + 1) + 1,
@@ -67,9 +82,7 @@ const drawCells = () => {
       );
     }
   }
-  
-  ctx.stroke();
-};
+}
 
 const isPaused = () => {
   return animationId === null;
@@ -77,6 +90,7 @@ const isPaused = () => {
 
 const playPauseButton = document.getElementById("play-pause");
 const play = () => {
+  fps.reset();
   playPauseButton.textContent = "⏸";
   renderLoop();
 }
