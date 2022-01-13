@@ -1,2 +1,5 @@
 node_modules
 dist
+
+# Using yarn.lock because it is smaller
+package-lock.json
