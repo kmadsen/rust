@@ -1,0 +1,9 @@
+button.magenta {
+  color: magenta
+}
+button#button-decrease {
+  color: greenyellow
+}
+button#button-decrease:hover {
+  background: black;
+}

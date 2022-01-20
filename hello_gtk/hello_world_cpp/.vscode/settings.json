@@ -1,0 +1,9 @@
+{
+  "files.associations": {
+    "gtk.h": "c",
+    "gtkrange.h": "c",
+    "gtkrecentmanager.h": "c",
+    "gdk.h": "c",
+    "gdkapplaunchcontext.h": "c"
+  }
+}

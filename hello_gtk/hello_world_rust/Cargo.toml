@@ -1,0 +1,12 @@
+[package]
+name = "hello_world_app"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+glib = "0.15.2"
+glib-macros = "0.15.1"
+gtk = { version = "0.4.3", package = "gtk4" }
+
