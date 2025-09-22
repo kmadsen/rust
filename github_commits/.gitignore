@@ -3,3 +3,6 @@ target/
 
 # Generated results
 pull_requests.csv
+
+# Environment variables
+.env
